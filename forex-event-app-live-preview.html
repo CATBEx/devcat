@@ -1,0 +1,535 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <!-- IMPORTANT: fixed 390px viewport for iframe scaling -->
+    <meta name="viewport" content="width=390px, initial-scale=1.0" />
+    <title>Market Signal Hub Preview</title>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Syne:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      html,
+      body {
+        width: 390px; /* fixed — matches iframe scale system */
+        overflow-x: hidden;
+        overflow-y: auto;
+        background: #0a0a0a; /* match portfolio dark bg */
+        color: #ededed;
+        font-family: "DM Sans", sans-serif;
+        font-size: 15px;
+        line-height: 1.55;
+      }
+
+      /* ── THEME VARIABLES ── */
+      :root {
+        --bg: #080b12;
+        --bg-card: #0e1420;
+        --bg-card-hover: #131926;
+        --border: rgba(255, 255, 255, 0.06);
+        --border-strong: rgba(255, 255, 255, 0.12);
+        --accent: #00e5a0;
+        --accent-dim: rgba(0, 229, 160, 0.12);
+        --red: #ff3b6b;
+        --red-dim: rgba(255, 59, 107, 0.12);
+        --yellow: #ffb800;
+        --text: #f0f4ff;
+        --text-sub: #6b7a99;
+        --text-muted: #3d4a63;
+      }
+
+      /* ── LAYOUT ── */
+      .page-container {
+        width: 390px;
+        display: flex;
+        flex-direction: column;
+      }
+
+      /* ── SECTION PADDING ── */
+      .section {
+        padding: 32px 20px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      }
+
+      /* ── TYPOGRAPHY ── */
+      .syne {
+        font-family: "Syne", sans-serif;
+      }
+      .mono {
+        font-family: "DM Mono", monospace;
+      }
+
+      .h1 {
+        font-size: 24px;
+        font-weight: 700;
+        letter-spacing: -0.02em;
+        margin-bottom: 8px;
+        color: var(--text);
+      }
+
+      .h2 {
+        font-size: 18px;
+        font-weight: 700;
+        margin-bottom: 16px;
+        color: var(--text);
+      }
+
+      .h3 {
+        font-size: 14px;
+        font-weight: 600;
+        color: var(--text-sub);
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        margin-bottom: 12px;
+      }
+
+      /* ── CARDS ── */
+      .card {
+        background: var(--bg-card);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 16px;
+        margin-bottom: 12px;
+      }
+
+      .card:hover {
+        border-color: var(--border-strong);
+      }
+
+      /* ── COMPONENTS ── */
+      .accent-text {
+        color: var(--accent);
+      }
+      .red-text {
+        color: var(--red);
+      }
+
+      .chip {
+        display: inline-flex;
+        align-items: center;
+        padding: 4px 8px;
+        border-radius: 6px;
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 0.06em;
+      }
+
+      .chip-buy {
+        background: var(--accent-dim);
+        color: var(--accent);
+      }
+      .chip-sell {
+        background: var(--red-dim);
+        color: var(--red);
+      }
+      .chip-tf {
+        background: rgba(255, 255, 255, 0.05);
+        color: var(--text-sub);
+      }
+
+      .badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 10px;
+        font-weight: 600;
+      }
+
+      .badge-forming {
+        color: var(--yellow);
+      }
+      .badge-confirmed {
+        color: var(--accent);
+      }
+
+      .dot {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        display: inline-block;
+      }
+
+      .dot-pulse {
+        animation: pulse 1.5s infinite;
+      }
+
+      @keyframes pulse {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.4;
+        }
+      }
+
+      .stat-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 6px 0;
+        border-bottom: 1px solid var(--border);
+        font-size: 12px;
+      }
+
+      .stat-row:last-child {
+        border-bottom: none;
+      }
+      .stat-label {
+        color: var(--text-sub);
+      }
+      .stat-val {
+        font-family: "DM Mono", monospace;
+        color: var(--text);
+      }
+
+      .progress-bar {
+        height: 4px;
+        background: var(--border);
+        border-radius: 2px;
+        overflow: hidden;
+        margin-top: 6px;
+      }
+
+      .progress-fill {
+        height: 100%;
+        border-radius: 2px;
+      }
+
+      /* ── TIKER ── */
+      .ticker-wrap {
+        width: 100%;
+        overflow: hidden;
+        background: rgba(0, 229, 160, 0.04);
+        border-bottom: 1px solid var(--border);
+        white-space: nowrap;
+        padding: 6px 0;
+      }
+
+      .ticker {
+        display: inline-block;
+        animation: ticker 20s linear infinite;
+      }
+
+      .ticker-item {
+        display: inline-block;
+        padding: 0 20px;
+        font-size: 11px;
+        font-family: "DM Mono", monospace;
+      }
+
+      @keyframes ticker {
+        0% {
+          transform: translate3d(0, 0, 0);
+        }
+        100% {
+          transform: translate3d(-50%, 0, 0);
+        }
+      }
+
+      /* ── PAGE HEIGHT HELPERS ── */
+      .spacer {
+        height: 20px;
+      }
+      .spacer-lg {
+        height: 40px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page-container">
+      <!-- HEADER / HERO -->
+      <div class="section" style="padding-top: 40px; padding-bottom: 20px">
+        <div class="h3">Market Signal Hub</div>
+        <h1 class="h1">
+          Trade Patterns
+          <br />
+          <span class="accent-text">Instantly</span>
+        </h1>
+        <p style="color: var(--text-sub); margin-top: 8px; font-size: 14px">Real-time candlestick pattern recognition with AI-driven confidence scoring.</p>
+
+        <div style="margin-top: 20px; display: flex; align-items: center; gap: 10px">
+          <div style="background: var(--accent-dim); border: 1px solid rgba(0, 229, 160, 0.2); padding: 8px 16px; border-radius: 8px; display: flex; align-items: center; gap: 8px">
+            <span class="mono" style="font-size: 12px; font-weight: 700; color: var(--accent)">250 Credits</span>
+          </div>
+          <div style="background: rgba(255, 255, 255, 0.05); padding: 8px 16px; border-radius: 8px">
+            <span class="mono" style="font-size: 12px; color: var(--text-sub)">Pro Plan Active</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- TICKER -->
+      <div class="ticker-wrap">
+        <div class="ticker">
+          <span class="ticker-item accent-text">EURUSD +0.12%</span>
+          <span class="ticker-item red-text">XAUUSD -0.08%</span>
+          <span class="ticker-item accent-text">BTCUSDT +2.34%</span>
+          <span class="ticker-item accent-text">ETHUSDT +3.17%</span>
+          <span class="ticker-item red-text">USDJPY -0.22%</span>
+          <span class="ticker-item accent-text">SOLUSDT +5.89%</span>
+          <!-- Duplicate for loop -->
+          <span class="ticker-item accent-text">EURUSD +0.12%</span>
+          <span class="ticker-item red-text">XAUUSD -0.08%</span>
+          <span class="ticker-item accent-text">BTCUSDT +2.34%</span>
+          <span class="ticker-item accent-text">ETHUSDT +3.17%</span>
+          <span class="ticker-item red-text">USDJPY -0.22%</span>
+          <span class="ticker-item accent-text">SOLUSDT +5.89%</span>
+        </div>
+      </div>
+
+      <!-- CONTENT BLOCK 1: LIVE SIGNALS -->
+      <div class="section">
+        <div class="h3">Live Formations</div>
+
+        <!-- Signal 1 -->
+        <div class="card">
+          <div style="display: flex; justify-content: space-between; margin-bottom: 8px">
+            <div style="display: flex; align-items: center; gap: 8px">
+              <span class="syne" style="font-weight: 700; font-size: 15px">EURUSD</span>
+              <span class="chip chip-tf">M15</span>
+            </div>
+            <div class="badge badge-forming">
+              <span class="dot" style="background: var(--yellow)" class="dot-pulse"></span>
+              <span>FORMING</span>
+            </div>
+          </div>
+          <div style="font-size: 13px; color: var(--text-sub); margin-bottom: 10px">Shooting Star Pattern</div>
+
+          <div style="display: flex; justify-content: space-between; font-size: 11px; color: var(--text-sub); margin-bottom: 4px">
+            <span>Confidence</span>
+            <span style="color: var(--yellow)">74%</span>
+          </div>
+          <div class="progress-bar">
+            <div class="progress-fill" style="width: 74%; background: var(--yellow)"></div>
+          </div>
+        </div>
+
+        <!-- Signal 2 -->
+        <div class="card">
+          <div style="display: flex; justify-content: space-between; margin-bottom: 8px">
+            <div style="display: flex; align-items: center; gap: 8px">
+              <span class="syne" style="font-weight: 700; font-size: 15px">GBPJPY</span>
+              <span class="chip chip-tf">H4</span>
+            </div>
+            <div class="badge badge-forming">
+              <span class="dot" style="background: var(--yellow)" class="dot-pulse"></span>
+              <span>FORMING</span>
+            </div>
+          </div>
+          <div style="font-size: 13px; color: var(--text-sub); margin-bottom: 10px">Bullish Engulfing</div>
+
+          <div style="display: flex; justify-content: space-between; font-size: 11px; color: var(--text-sub); margin-bottom: 4px">
+            <span>Confidence</span>
+            <span style="color: var(--accent)">88%</span>
+          </div>
+          <div class="progress-bar">
+            <div class="progress-fill" style="width: 88%; background: var(--accent)"></div>
+          </div>
+        </div>
+
+        <!-- Signal 3 -->
+        <div class="card">
+          <div style="display: flex; justify-content: space-between; margin-bottom: 8px">
+            <div style="display: flex; align-items: center; gap: 8px">
+              <span class="syne" style="font-weight: 700; font-size: 15px">XAUUSD</span>
+              <span class="chip chip-tf">H1</span>
+            </div>
+            <div class="badge badge-forming">
+              <span class="dot" style="background: var(--yellow)" class="dot-pulse"></span>
+              <span>FORMING</span>
+            </div>
+          </div>
+          <div style="font-size: 13px; color: var(--text-sub); margin-bottom: 10px">Evening Star</div>
+
+          <div style="display: flex; justify-content: space-between; font-size: 11px; color: var(--text-sub); margin-bottom: 4px">
+            <span>Confidence</span>
+            <span style="color: var(--red)">41%</span>
+          </div>
+          <div class="progress-bar">
+            <div class="progress-fill" style="width: 41%; background: var(--red)"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CONTENT BLOCK 2: RECENT PERFORMANCE -->
+      <div class="section">
+        <div class="h3">Recent Performance</div>
+
+        <!-- Recent 1 -->
+        <div class="card" style="border-left: 3px solid var(--accent)">
+          <div style="display: flex; justify-content: space-between; margin-bottom: 8px">
+            <div>
+              <span class="syne" style="font-weight: 700; font-size: 15px">USDJPY</span>
+              <span class="chip chip-tf" style="margin-left: 6px">H4</span>
+            </div>
+            <span class="chip chip-buy">BUY</span>
+          </div>
+          <div style="font-size: 13px; color: var(--text-sub); margin-bottom: 10px">Morning Star</div>
+          <div class="stat-row">
+            <span class="stat-label">Confidence</span>
+            <span class="stat-val" style="color: var(--accent)">89%</span>
+          </div>
+          <div class="stat-row">
+            <span class="stat-label">Result</span>
+            <span class="stat-val">TP1 Hit</span>
+          </div>
+        </div>
+
+        <!-- Recent 2 -->
+        <div class="card" style="border-left: 3px solid var(--red)">
+          <div style="display: flex; justify-content: space-between; margin-bottom: 8px">
+            <div>
+              <span class="syne" style="font-weight: 700; font-size: 15px">SOLUSDT</span>
+              <span class="chip chip-tf" style="margin-left: 6px">M15</span>
+            </div>
+            <span class="chip chip-sell">SELL</span>
+          </div>
+          <div style="font-size: 13px; color: var(--text-sub); margin-bottom: 10px">Bearish Engulfing</div>
+          <div class="stat-row">
+            <span class="stat-label">Confidence</span>
+            <span class="stat-val" style="color: var(--red)">72%</span>
+          </div>
+          <div class="stat-row">
+            <span class="stat-label">Result</span>
+            <span class="stat-val">Running</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- CONTENT BLOCK 3: WALLET / STATS -->
+      <div class="section">
+        <div class="h3">Account Overview</div>
+
+        <div class="card" style="background: linear-gradient(135deg, #0a1628, #0d1f3c); border: 1px solid var(--border)">
+          <div style="font-size: 11px; color: var(--text-sub); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 4px">Credit Balance</div>
+          <div class="syne" style="font-size: 32px; font-weight: 800; color: var(--accent)">250</div>
+          <div style="font-size: 13px; color: var(--text-sub)">≈ 50 signals remaining</div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px">
+          <div class="card" style="text-align: center; padding: 12px">
+            <div class="mono" style="font-size: 18px; font-weight: 700; color: var(--accent)">24</div>
+            <div style="font-size: 10px; color: var(--text-muted); margin-top: 4px">Unlocked</div>
+          </div>
+          <div class="card" style="text-align: center; padding: 12px">
+            <div class="mono" style="font-size: 18px; font-weight: 700; color: #3b8bff">89%</div>
+            <div style="font-size: 10px; color: var(--text-muted); margin-top: 4px">Win Rate</div>
+          </div>
+          <div class="card" style="text-align: center; padding: 12px">
+            <div class="mono" style="font-size: 18px; font-weight: 700; color: var(--yellow)">1.2s</div>
+            <div style="font-size: 10px; color: var(--text-muted); margin-top: 4px">Latency</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CONTENT BLOCK 4: MARKET ANALYSIS (PREVIEW) -->
+      <div class="section">
+        <div class="h3">Premium Analysis</div>
+
+        <div class="card" style="position: relative; overflow: hidden">
+          <!-- Blurred Content Simulation -->
+          <div style="filter: blur(4px); opacity: 0.6; user-select: none">
+            <div class="stat-row">
+              <span class="stat-label">Entry Price</span>
+              <span class="stat-val">1.0842</span>
+            </div>
+            <div class="stat-row">
+              <span class="stat-label">Stop Loss</span>
+              <span class="stat-val" style="color: var(--red)">1.0812</span>
+            </div>
+            <div class="stat-row">
+              <span class="stat-label">Take Profit</span>
+              <span class="stat-val" style="color: var(--accent)">1.0902</span>
+            </div>
+            <div style="margin-top: 10px; height: 60px; background: rgba(255, 255, 255, 0.05); border-radius: 4px"></div>
+          </div>
+
+          <!-- Lock Overlay -->
+          <div style="position: absolute; inset: 0; background: rgba(8, 11, 18, 0.6); backdrop-filter: blur(2px); display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px; border-radius: 12px">
+            <div style="width: 40px; height: 40px; border-radius: 50%; background: var(--accent-dim); border: 1px solid var(--accent); display: flex; align-items: center; justify-content: center; margin-bottom: 10px">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2">
+                <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+                <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+              </svg>
+            </div>
+            <div class="syne" style="font-weight: 700; color: var(--text); font-size: 14px; text-align: center">Unlock Full Analysis</div>
+            <div style="font-size: 11px; color: var(--text-sub); text-align: center; margin-top: 4px">Entry, SL, TP & Context</div>
+          </div>
+        </div>
+
+        <!-- Another Analysis -->
+        <div class="card" style="position: relative; overflow: hidden">
+          <div style="filter: blur(4px); opacity: 0.6; user-select: none">
+            <div class="stat-row">
+              <span class="stat-label">Market Trend</span>
+              <span class="stat-val">Bullish</span>
+            </div>
+            <div class="stat-row">
+              <span class="stat-label">Volume</span>
+              <span class="stat-val">High (+18%)</span>
+            </div>
+            <div style="margin-top: 10px; height: 60px; background: rgba(255, 255, 255, 0.05); border-radius: 4px"></div>
+          </div>
+          <div style="position: absolute; inset: 0; background: rgba(8, 11, 18, 0.6); backdrop-filter: blur(2px); display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px; border-radius: 12px">
+            <div style="width: 40px; height: 40px; border-radius: 50%; background: var(--accent-dim); border: 1px solid var(--accent); display: flex; align-items: center; justify-content: center; margin-bottom: 10px">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2">
+                <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+                <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+              </svg>
+            </div>
+            <div class="syne" style="font-weight: 700; color: var(--text); font-size: 14px; text-align: center">Unlock Market Context</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CONTENT BLOCK 5: NOTIFICATIONS -->
+      <div class="section">
+        <div class="h3">Recent Alerts</div>
+
+        <div class="card" style="border-left: 3px solid var(--accent)">
+          <div style="display: flex; gap: 12px">
+            <div style="width: 32px; height: 32px; background: rgba(0, 229, 160, 0.1); border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2">
+                <polyline points="23 6 13.5 15.5 8.5 10.5 1 18" />
+                <polyline points="17 6 23 6 23 12" />
+              </svg>
+            </div>
+            <div>
+              <div style="font-size: 13px; font-weight: 600; color: var(--text)">
+                BTCUSDT
+                <span style="color: var(--accent)">Bullish</span>
+              </div>
+              <div style="font-size: 11px; color: var(--text-sub); margin-top: 2px">Engulfing confirmed • 9m ago</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card" style="border-left: 3px solid var(--red)">
+          <div style="display: flex; gap: 12px">
+            <div style="width: 32px; height: 32px; background: rgba(255, 59, 107, 0.1); border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--red)" stroke-width="2">
+                <polyline points="23 18 13.5 8.5 8.5 13.5 1 6" />
+                <polyline points="17 18 23 18 23 12" />
+              </svg>
+            </div>
+            <div>
+              <div style="font-size: 13px; font-weight: 600; color: var(--text)">
+                EURUSD
+                <span style="color: var(--red)">Bearish</span>
+              </div>
+              <div style="font-size: 11px; color: var(--text-sub); margin-top: 2px">Shooting Star forming • 2m ago</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- FOOTER SPACER -->
+      <div style="height: 100px"></div>
+    </div>
+  </body>
+</html>
