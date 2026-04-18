@@ -1,0 +1,1871 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="theme-color" content="#0a0a0a" />
+
+<title>DevCat AI — Independent developer · MVPs, prototypes, AI systems</title>
+<meta name="description" content="Independent full-stack developer. Ships AI mobile apps, investor-ready prototypes, and system architecture docs for early-stage founders. Fixed scope. Fixed price. 3–14 days." />
+
+<link rel="canonical" href="https://devcatai.netlify.app/" />
+<meta name="google-site-verification" content="zf44eW1bMxqi8zSOMnYeW4vOYS-B0rxomWLqqm59MHo" />
+
+<meta property="og:type" content="website" />
+<meta property="og:title" content="DevCat AI — Independent developer · MVPs & prototypes" />
+<meta property="og:description" content="Ships AI mobile apps and investor-ready prototypes for founders. Fixed scope. 3–14 days." />
+<meta property="og:url" content="https://devcatai.netlify.app/" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ProfessionalService",
+  "name": "DevCat AI",
+  "description": "Independent developer building MVPs, prototypes, and AI systems for early-stage founders.",
+  "url": "https://devcatai.netlify.app/",
+  "priceRange": "$250-$1500",
+  "serviceType": ["MVP Development", "AI Integration", "Mobile App Development"]
+}
+</script>
+
+<!-- Theme boot: set before render to prevent flash -->
+<script>
+  (function() {
+    try {
+      var saved = localStorage.getItem("devcat-theme");
+      var prefersLight = window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches;
+      var theme = saved || (prefersLight ? "light" : "dark");
+      document.documentElement.setAttribute("data-theme", theme);
+    } catch (e) {
+      document.documentElement.setAttribute("data-theme", "dark");
+    }
+  })();
+</script>
+
+<style>
+  :root {
+    --sans:       "Geist", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+    --mono:       "Geist Mono", ui-monospace, "SF Mono", Menlo, monospace;
+
+    --pad:        clamp(20px, 4vw, 40px);
+    --max:        1200px;
+  }
+
+  /* ────────── DARK THEME (default) ────────── */
+  html[data-theme="dark"] {
+    --bg:         #0a0a0a;
+    --bg-elev:    #111111;
+    --bg-card:    #0e0e0e;
+    --bg-hover:   #161616;
+    --border:     rgba(255,255,255,0.08);
+    --border-hi:  rgba(255,255,255,0.14);
+    --border-on:  rgba(255,255,255,0.24);
+
+    --fg:         #ededed;
+    --fg-soft:    #a1a1a1;
+    --fg-mute:    #707070;
+    --fg-dim:     #4a4a4a;
+
+    --accent:     #00d9b1;
+    --accent-dim: rgba(0, 217, 177, 0.12);
+    --accent-bg:  rgba(0, 217, 177, 0.06);
+    --danger:     #ff5a66;
+    --warn:       #ffb224;
+
+    --nav-bg:     rgba(10,10,10,0.7);
+    --grid-line:  rgba(255,255,255,0.015);
+    --shadow:     0 30px 80px -20px rgba(0,0,0,0.6);
+    --term-red:   #ff5a5a;
+    --term-yel:   #ffbe2e;
+    --term-grn:   #28c840;
+  }
+
+  /* ────────── LIGHT THEME ────────── */
+  html[data-theme="light"] {
+    --bg:         #fafaf9;
+    --bg-elev:    #ffffff;
+    --bg-card:    #ffffff;
+    --bg-hover:   #f2f1ee;
+    --border:     rgba(10,10,10,0.08);
+    --border-hi:  rgba(10,10,10,0.14);
+    --border-on:  rgba(10,10,10,0.24);
+
+    --fg:         #0a0a0a;
+    --fg-soft:    #4a4a48;
+    --fg-mute:    #7a7870;
+    --fg-dim:     #b0aea5;
+
+    --accent:     #0a8f73;
+    --accent-dim: rgba(10, 143, 115, 0.10);
+    --accent-bg:  rgba(10, 143, 115, 0.04);
+    --danger:     #dc2626;
+    --warn:       #b45309;
+
+    --nav-bg:     rgba(250,250,249,0.75);
+    --grid-line:  rgba(10,10,10,0.025);
+    --shadow:     0 30px 80px -30px rgba(10,10,10,0.15);
+    --term-red:   #ff5a5a;
+    --term-yel:   #ffbe2e;
+    --term-grn:   #28c840;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; -webkit-font-smoothing: antialiased; }
+  html { scroll-behavior: smooth; background: var(--bg); }
+
+  body {
+    font-family: var(--sans);
+    background: var(--bg);
+    color: var(--fg);
+    line-height: 1.55;
+    font-size: 15px;
+    font-weight: 400;
+    letter-spacing: -0.005em;
+    overflow-x: hidden;
+    min-height: 100vh;
+    transition: background-color 0.25s ease, color 0.25s ease;
+  }
+
+  /* smooth transitions on themed surfaces */
+  .nav, .service, .work-card, .work-visual, .work-body, .work-foot,
+  .step, .plan, .plan-btn, .channel, .stack-panel, .terminal, .term-head, .term-body,
+  .meta-tag, .status-pill, .sec-eyebrow, .stack-chip, .ch-icon, .ch-tag, .ch-link,
+  .filters, .filt-btn, .btn, .stat-bar, .stat, .stack-panel-title, .stack-row {
+    transition: background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease;
+  }
+
+  /* subtle grid bg */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(var(--grid-line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+    background-size: 56px 56px;
+    pointer-events: none;
+    z-index: 0;
+    mask-image: radial-gradient(ellipse at 50% 0%, black 30%, transparent 70%);
+    -webkit-mask-image: radial-gradient(ellipse at 50% 0%, black 30%, transparent 70%);
+  }
+
+  a { color: inherit; text-decoration: none; }
+  button { font-family: inherit; cursor: pointer; border: none; background: none; color: inherit; }
+  ::selection { background: var(--accent); color: #fff; }
+
+  .wrap {
+    max-width: var(--max);
+    margin: 0 auto;
+    padding: 0 var(--pad);
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ═════════ NAV ═════════ */
+  .nav {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: var(--nav-bg);
+    backdrop-filter: saturate(180%) blur(12px);
+    -webkit-backdrop-filter: saturate(180%) blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 56px;
+  }
+
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--mono);
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+  }
+  .brand-mark {
+    width: 22px; height: 22px;
+    background: var(--fg);
+    color: var(--bg);
+    display: inline-flex; align-items: center; justify-content: center;
+    font-weight: 700;
+    border-radius: 5px;
+    font-size: 11px;
+    letter-spacing: 0;
+    transition: background-color 0.25s ease, color 0.25s ease;
+  }
+  .brand-name .mute { color: var(--fg-mute); font-weight: 400; }
+
+  .nav-links {
+    display: flex;
+    gap: 4px;
+    align-items: center;
+  }
+  .nav-links a {
+    font-size: 13px;
+    color: var(--fg-soft);
+    padding: 7px 12px;
+    border-radius: 6px;
+    transition: all 0.15s;
+  }
+  .nav-links a:hover { color: var(--fg); background: var(--bg-hover); }
+
+  .nav-cta {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .status-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--fg-soft);
+    padding: 5px 10px;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    background: var(--bg-card);
+  }
+  .status-dot {
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 8px var(--accent);
+    animation: pulse 2s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+  }
+
+  /* ═════════ BUTTONS ═════════ */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 16px;
+    border-radius: 7px;
+    font-size: 13.5px;
+    font-weight: 500;
+    letter-spacing: -0.005em;
+    transition: all 0.15s ease;
+    border: 1px solid transparent;
+    white-space: nowrap;
+  }
+  .btn svg { width: 13px; height: 13px; }
+  .btn-primary {
+    background: var(--fg);
+    color: var(--bg);
+    border-color: var(--fg);
+  }
+  .btn-primary:hover {
+    background: var(--accent);
+    color: #fff;
+    border-color: var(--accent);
+    transform: translateY(-1px);
+  }
+  html[data-theme="light"] .btn-primary:hover {
+    color: #fff;
+  }
+  .btn-ghost {
+    border-color: var(--border-hi);
+    color: var(--fg);
+    background: transparent;
+  }
+  .btn-ghost:hover {
+    background: var(--bg-hover);
+    border-color: var(--border-on);
+  }
+  .btn-sm { padding: 7px 12px; font-size: 12.5px; }
+
+  /* ═════════ HERO ═════════ */
+  .hero {
+    padding: clamp(60px, 10vw, 140px) 0 clamp(50px, 8vw, 100px);
+    position: relative;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 700px;
+    height: 700px;
+    background: radial-gradient(circle, var(--accent-bg), transparent 60%);
+    pointer-events: none;
+    filter: blur(40px);
+    opacity: 0.6;
+  }
+
+  .hero-meta {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 28px;
+  }
+  .meta-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    font-family: var(--mono);
+    font-size: 11.5px;
+    color: var(--fg-soft);
+    padding: 5px 11px;
+    border: 1px solid var(--border);
+    background: var(--bg-card);
+    border-radius: 999px;
+  }
+  .meta-tag.accent { color: var(--accent); border-color: rgba(0,217,177,0.22); background: var(--accent-dim); }
+
+  .hero h1 {
+    font-size: clamp(38px, 6.5vw, 74px);
+    line-height: 1.02;
+    font-weight: 600;
+    letter-spacing: -0.035em;
+    margin-bottom: 28px;
+    max-width: 20ch;
+    color: var(--fg);
+  }
+  html[data-theme="dark"] .hero h1 {
+    background: linear-gradient(180deg, #ffffff 40%, rgba(255,255,255,0.75));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  html[data-theme="light"] .hero h1 {
+    background: linear-gradient(180deg, #0a0a0a 40%, rgba(10,10,10,0.72));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .hero h1 .accent {
+    background: linear-gradient(180deg, var(--accent) 20%, color-mix(in srgb, var(--accent) 70%, var(--fg)));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .hero-lede {
+    font-size: clamp(16px, 1.5vw, 19px);
+    color: var(--fg-soft);
+    max-width: 62ch;
+    margin-bottom: 36px;
+    line-height: 1.55;
+    letter-spacing: -0.005em;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 70px;
+  }
+
+  /* hero terminal */
+  .terminal {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+    max-width: 700px;
+    box-shadow: var(--shadow);
+  }
+  .term-head {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--border);
+    background: var(--bg-hover);
+    font-family: var(--mono);
+    font-size: 11.5px;
+    color: var(--fg-mute);
+  }
+  .term-dots {
+    display: flex;
+    gap: 6px;
+    margin-right: 10px;
+  }
+  .term-dots span {
+    width: 11px; height: 11px;
+    border-radius: 50%;
+    background: #3a3a3a;
+  }
+  .term-dots span:nth-child(1) { background: #ff5a5a; }
+  .term-dots span:nth-child(2) { background: #ffbe2e; }
+  .term-dots span:nth-child(3) { background: #28c840; }
+
+  .term-body {
+    padding: 20px 22px 22px;
+    font-family: var(--mono);
+    font-size: 13px;
+    line-height: 1.75;
+  }
+  .term-line { display: flex; gap: 10px; }
+  .term-prompt { color: var(--accent); user-select: none; flex-shrink: 0; }
+  .term-cmd { color: var(--fg); }
+  .term-out { color: var(--fg-soft); padding-left: 18px; }
+  .term-out .k { color: var(--accent); }
+  .term-out .n { color: #ffb224; }
+  .term-out .s { color: #7dd3fc; }
+  .term-cursor {
+    display: inline-block;
+    width: 7px;
+    height: 15px;
+    background: var(--accent);
+    vertical-align: middle;
+    margin-left: 3px;
+    animation: blink 1s step-end infinite;
+  }
+  @keyframes blink {
+    50% { opacity: 0; }
+  }
+
+  /* ═════════ STAT BAR ═════════ */
+  .stat-bar {
+    margin-top: 70px;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+  }
+  .stat {
+    padding: 22px 24px 22px 0;
+    border-right: 1px solid var(--border);
+  }
+  .stat:last-child { border-right: none; padding-right: 0; }
+  .stat-n {
+    font-family: var(--mono);
+    font-size: 26px;
+    font-weight: 500;
+    color: var(--fg);
+    letter-spacing: -0.02em;
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+  .stat-n .accent { color: var(--accent); }
+  .stat-l {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--fg-mute);
+    letter-spacing: 0;
+    text-transform: none;
+  }
+
+  /* ═════════ SECTIONS ═════════ */
+  section { padding: clamp(60px, 9vw, 110px) 0; position: relative; }
+
+  .sec-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--fg-mute);
+    padding: 5px 10px;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    margin-bottom: 22px;
+    background: var(--bg-card);
+  }
+  .sec-eyebrow .num { color: var(--accent); }
+
+  .sec-head {
+    font-size: clamp(28px, 4vw, 46px);
+    font-weight: 600;
+    line-height: 1.08;
+    letter-spacing: -0.03em;
+    margin-bottom: 18px;
+    max-width: 22ch;
+  }
+  .sec-head .accent { color: var(--accent); }
+  .sec-head .mute { color: var(--fg-mute); }
+
+  .sec-intro {
+    font-size: 17px;
+    color: var(--fg-soft);
+    max-width: 62ch;
+    line-height: 1.55;
+    margin-bottom: 56px;
+  }
+
+  /* ═════════ SERVICES ═════════ */
+  .services {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+  }
+  .service {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 26px 24px 24px;
+    transition: all 0.2s ease;
+    position: relative;
+    overflow: hidden;
+  }
+  .service:hover {
+    border-color: var(--border-hi);
+    background: var(--bg-hover);
+    transform: translateY(-2px);
+  }
+  .service-tag {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--fg-mute);
+    margin-bottom: 14px;
+  }
+  .service-tag .hash { color: var(--accent); }
+  .service h3 {
+    font-size: 18px;
+    font-weight: 600;
+    letter-spacing: -0.015em;
+    margin-bottom: 10px;
+    color: var(--fg);
+  }
+  .service p {
+    font-size: 14px;
+    color: var(--fg-soft);
+    line-height: 1.6;
+    margin-bottom: 18px;
+  }
+  .service-stack {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    padding-top: 16px;
+    border-top: 1px solid var(--border);
+  }
+  .stack-chip {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--fg-soft);
+    padding: 3px 8px;
+    background: rgba(255,255,255,0.04);
+    border-radius: 4px;
+  }
+
+  /* ═════════ WORK ═════════ */
+  .work-intro {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 50px;
+    align-items: end;
+    margin-bottom: 50px;
+  }
+  .work-intro p {
+    font-size: 16px;
+    color: var(--fg-soft);
+    line-height: 1.6;
+    max-width: 48ch;
+  }
+
+  .filters {
+    display: flex;
+    gap: 4px;
+    padding: 4px;
+    border: 1px solid var(--border);
+    background: var(--bg-card);
+    border-radius: 8px;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+    width: fit-content;
+    max-width: 100%;
+    overflow-x: auto;
+  }
+  .filt-btn {
+    font-family: var(--mono);
+    font-size: 12px;
+    padding: 7px 14px;
+    color: var(--fg-mute);
+    background: transparent;
+    border-radius: 5px;
+    transition: all 0.15s;
+    white-space: nowrap;
+  }
+  .filt-btn:hover { color: var(--fg); background: rgba(255,255,255,0.04); }
+  .filt-btn.on {
+    background: var(--fg);
+    color: var(--bg);
+  }
+
+  .work-grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 14px;
+  }
+  .work-card {
+    grid-column: span 6;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+    transition: all 0.22s ease;
+    display: flex;
+    flex-direction: column;
+  }
+  .work-card.feature { grid-column: span 12; }
+  .work-card.third { grid-column: span 4; }
+  .work-card:hover {
+    border-color: var(--border-hi);
+    transform: translateY(-2px);
+  }
+  .work-card:hover .work-visual::before { opacity: 0.5; }
+
+  /* gradient visual */
+  .work-visual {
+    position: relative;
+    aspect-ratio: 16 / 9;
+    display: flex;
+    align-items: flex-end;
+    padding: 26px 26px 22px;
+    overflow: hidden;
+    border-bottom: 1px solid var(--border);
+  }
+  .work-card.feature .work-visual { aspect-ratio: 21 / 9; }
+  .work-card.third .work-visual { aspect-ratio: 4 / 5; padding: 20px; }
+
+  .work-visual::before {
+    content: '';
+    position: absolute; inset: 0;
+    opacity: 0.35;
+    background-image:
+      radial-gradient(circle at 85% 15%, rgba(255,255,255,0.18), transparent 45%),
+      url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence baseFrequency='0.65' numOctaves='3'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.09 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+    mix-blend-mode: overlay;
+    transition: opacity 0.3s;
+    pointer-events: none;
+  }
+
+  .work-visual-content {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 16px;
+  }
+  .work-card.third .work-visual-content {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .work-visual-name {
+    font-family: var(--mono);
+    font-size: clamp(17px, 2.2vw, 26px);
+    font-weight: 500;
+    color: #fff;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    text-shadow: 0 2px 20px rgba(0,0,0,0.3);
+  }
+  .work-card.feature .work-visual-name { font-size: clamp(22px, 2.8vw, 36px); }
+  .work-card.third .work-visual-name { font-size: 18px; }
+
+  .work-visual-cta {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: rgba(255,255,255,0.85);
+    padding: 6px 10px;
+    border: 1px solid rgba(255,255,255,0.25);
+    background: rgba(0,0,0,0.25);
+    backdrop-filter: blur(8px);
+    border-radius: 5px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    white-space: nowrap;
+    transition: all 0.2s;
+  }
+  .work-card.third .work-visual-cta { margin-top: auto; }
+  .work-card:hover .work-visual-cta {
+    background: rgba(0,0,0,0.5);
+    border-color: rgba(255,255,255,0.45);
+  }
+  .work-visual-cta svg { width: 10px; height: 10px; }
+
+  .work-body {
+    padding: 20px 22px 22px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    flex: 1;
+  }
+  .work-card.third .work-body { padding: 16px 18px 18px; }
+
+  .work-cat {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--accent);
+  }
+  .work-title {
+    font-size: 17px;
+    font-weight: 600;
+    letter-spacing: -0.015em;
+    color: var(--fg);
+    line-height: 1.25;
+  }
+  .work-card.third .work-title { font-size: 15px; }
+  .work-desc {
+    font-size: 13.5px;
+    color: var(--fg-soft);
+    line-height: 1.55;
+    flex: 1;
+  }
+  .work-card.third .work-desc { font-size: 12.5px; }
+  .work-foot {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--fg-mute);
+    padding-top: 12px;
+    margin-top: 4px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+  }
+  .work-foot .stack {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .work-foot .demo {
+    color: var(--accent);
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    transition: gap 0.2s;
+    flex-shrink: 0;
+  }
+  .work-foot .demo:hover { gap: 9px; }
+  .work-foot .demo svg { width: 10px; height: 10px; }
+
+  /* ═════════ PROCESS ═════════ */
+  .steps {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+  }
+  .step {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 24px 22px 24px;
+    position: relative;
+  }
+  .step-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 18px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--border);
+  }
+  .step-n {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--fg-mute);
+  }
+  .step-n .accent { color: var(--accent); }
+  .step-t {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--accent);
+    padding: 3px 8px;
+    background: var(--accent-dim);
+    border-radius: 4px;
+  }
+  .step h4 {
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    margin-bottom: 10px;
+  }
+  .step p {
+    font-size: 13.5px;
+    color: var(--fg-soft);
+    line-height: 1.6;
+  }
+
+  /* ═════════ PRICING ═════════ */
+  .pricing {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+  }
+  .plan {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 32px 28px 28px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    transition: all 0.25s ease;
+  }
+  .plan:hover {
+    border-color: var(--border-hi);
+    transform: translateY(-3px);
+  }
+  .plan.featured {
+    border-color: rgba(0,217,177,0.35);
+    background: linear-gradient(180deg, rgba(0,217,177,0.04) 0%, transparent 50%), var(--bg-card);
+  }
+  .plan.featured::before {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    border-radius: 12px;
+    padding: 1px;
+    background: linear-gradient(180deg, rgba(0,217,177,0.35), transparent 60%);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+  }
+
+  .plan-badge {
+    position: absolute;
+    top: -1px;
+    right: 24px;
+    transform: translateY(-50%);
+    background: var(--accent);
+    color: var(--bg);
+    font-family: var(--mono);
+    font-size: 10px;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 4px;
+    letter-spacing: 0.02em;
+  }
+
+  .plan-label {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--fg-mute);
+    margin-bottom: 8px;
+  }
+  .plan.featured .plan-label { color: var(--accent); }
+
+  .plan h4 {
+    font-size: 22px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    margin-bottom: 10px;
+  }
+  .plan-desc {
+    font-size: 13.5px;
+    color: var(--fg-soft);
+    line-height: 1.55;
+    margin-bottom: 24px;
+    min-height: 42px;
+  }
+  .plan-price {
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
+    margin-bottom: 6px;
+  }
+  .plan-price .cur {
+    font-family: var(--mono);
+    font-size: 16px;
+    color: var(--fg-mute);
+    font-weight: 400;
+  }
+  .plan-price .n {
+    font-size: 40px;
+    font-weight: 600;
+    letter-spacing: -0.035em;
+    font-family: var(--sans);
+    color: var(--fg);
+    line-height: 1;
+  }
+  .plan-price .per {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--fg-mute);
+    margin-left: 4px;
+  }
+  .plan-ship {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--accent);
+    margin-bottom: 24px;
+    padding-bottom: 22px;
+    border-bottom: 1px solid var(--border);
+  }
+  .plan-feats {
+    list-style: none;
+    margin-bottom: 28px;
+    flex: 1;
+  }
+  .plan-feat {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    font-size: 13.5px;
+    color: var(--fg-soft);
+    line-height: 1.5;
+    margin-bottom: 10px;
+  }
+  .plan-feat svg {
+    width: 14px; height: 14px;
+    color: var(--accent);
+    flex-shrink: 0;
+    margin-top: 3px;
+  }
+
+  .plan-btn {
+    padding: 12px 16px;
+    border-radius: 7px;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: -0.005em;
+    text-align: center;
+    transition: all 0.15s;
+    background: var(--bg-hover);
+    color: var(--fg);
+    border: 1px solid var(--border-hi);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+  }
+  .plan-btn:hover { background: var(--fg); color: var(--bg); border-color: var(--fg); }
+  .plan-btn svg { width: 13px; height: 13px; }
+
+  .plan.featured .plan-btn {
+    background: var(--accent);
+    color: #fff;
+    border-color: var(--accent);
+  }
+  .plan.featured .plan-btn:hover {
+    filter: brightness(1.08);
+  }
+
+  .pricing-foot {
+    text-align: center;
+    margin-top: 40px;
+    font-family: var(--mono);
+    font-size: 12.5px;
+    color: var(--fg-mute);
+  }
+  .pricing-foot a { color: var(--accent); }
+  .pricing-foot a:hover { text-decoration: underline; text-underline-offset: 3px; }
+
+  /* ═════════ ABOUT ═════════ */
+  .about {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 60px;
+    align-items: start;
+  }
+  .about-text p {
+    font-size: 16px;
+    color: var(--fg-soft);
+    line-height: 1.65;
+    margin-bottom: 18px;
+  }
+  .about-text p strong { color: var(--fg); font-weight: 500; }
+
+  .stack-panel {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 22px 24px 20px;
+  }
+  .stack-panel-title {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--fg-mute);
+    padding-bottom: 14px;
+    margin-bottom: 14px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .stack-panel-title .k { color: var(--accent); }
+
+  .stack-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 9px 0;
+    border-bottom: 1px dashed var(--border);
+    gap: 16px;
+  }
+  .stack-row:last-child { border-bottom: none; }
+  .stack-row-k {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--fg-mute);
+    flex-shrink: 0;
+    width: 90px;
+  }
+  .stack-row-v {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--fg);
+    text-align: right;
+    flex: 1;
+  }
+
+  /* ═════════ CTA ═════════ */
+  .cta {
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    background:
+      radial-gradient(ellipse 80% 50% at 50% 0%, var(--accent-bg), transparent 70%),
+      var(--bg);
+    position: relative;
+  }
+
+  .cta h2 {
+    font-size: clamp(32px, 5vw, 56px);
+    font-weight: 600;
+    line-height: 1.05;
+    letter-spacing: -0.035em;
+    margin-bottom: 18px;
+    max-width: 18ch;
+  }
+  .cta h2 .accent { color: var(--accent); }
+  .cta-lede {
+    font-size: 17px;
+    color: var(--fg-soft);
+    max-width: 58ch;
+    line-height: 1.55;
+    margin-bottom: 48px;
+  }
+
+  .channels {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+  }
+  .channel {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 22px 22px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    transition: all 0.2s ease;
+    position: relative;
+    overflow: hidden;
+  }
+  .channel:hover {
+    border-color: rgba(0,217,177,0.35);
+    background: var(--bg-hover);
+    transform: translateY(-2px);
+  }
+  .channel-head {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .ch-icon {
+    width: 34px; height: 34px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--border);
+    background: rgba(255,255,255,0.02);
+    border-radius: 8px;
+    color: var(--accent);
+    flex-shrink: 0;
+  }
+  .ch-icon svg { width: 15px; height: 15px; stroke-width: 1.8; }
+  .ch-name {
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+  .ch-tag {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--fg-mute);
+    padding: 2px 7px;
+    background: rgba(255,255,255,0.04);
+    border-radius: 4px;
+  }
+  .ch-desc {
+    font-size: 13px;
+    color: var(--fg-soft);
+    line-height: 1.55;
+    flex: 1;
+  }
+  .ch-link {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--accent);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding-top: 12px;
+    border-top: 1px solid var(--border);
+    transition: gap 0.2s;
+  }
+  .channel:hover .ch-link { gap: 10px; }
+  .ch-link svg { width: 11px; height: 11px; }
+
+  /* ═════════ FOOTER ═════════ */
+  footer { padding: 40px 0 32px; }
+  .foot {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+    font-family: var(--mono);
+    font-size: 11.5px;
+    color: var(--fg-mute);
+  }
+  .foot a { color: var(--fg-soft); transition: color 0.15s; }
+  .foot a:hover { color: var(--accent); }
+  .foot-left { display: flex; gap: 18px; flex-wrap: wrap; }
+
+  /* ═════════ THEME TOGGLE ═════════ */
+  .theme-toggle {
+    position: relative;
+    width: 34px;
+    height: 30px;
+    border: 1px solid var(--border);
+    background: var(--bg-card);
+    border-radius: 7px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--fg-soft);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+  }
+  .theme-toggle:hover {
+    background: var(--bg-hover);
+    border-color: var(--border-hi);
+    color: var(--fg);
+  }
+  .theme-toggle svg {
+    width: 14px;
+    height: 14px;
+    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.2s;
+    position: absolute;
+  }
+  .theme-toggle .icon-sun { opacity: 0; transform: rotate(-90deg) scale(0.5); }
+  .theme-toggle .icon-moon { opacity: 1; transform: rotate(0deg) scale(1); }
+  html[data-theme="light"] .theme-toggle .icon-sun { opacity: 1; transform: rotate(0deg) scale(1); }
+  html[data-theme="light"] .theme-toggle .icon-moon { opacity: 0; transform: rotate(90deg) scale(0.5); }
+
+  /* ═════════ RESPONSIVE ═════════ */
+  @media (max-width: 900px) {
+    .nav-links { display: none; }
+    .services { grid-template-columns: 1fr; }
+    .work-intro { grid-template-columns: 1fr; gap: 24px; }
+    .steps { grid-template-columns: 1fr 1fr; }
+    .pricing { grid-template-columns: 1fr; }
+    .about { grid-template-columns: 1fr; gap: 40px; }
+    .channels { grid-template-columns: 1fr; }
+    .work-card, .work-card.feature, .work-card.third { grid-column: span 12; }
+    .stat-bar { grid-template-columns: 1fr 1fr; }
+    .stat:nth-child(2) { border-right: none; padding-right: 0; }
+    .stat:nth-child(1), .stat:nth-child(3) { border-bottom: 1px solid var(--border); padding-bottom: 22px; }
+    .stat:nth-child(3), .stat:nth-child(4) { padding-top: 22px; }
+  }
+  @media (max-width: 560px) {
+    .hero-actions { flex-direction: column; align-items: stretch; }
+    .btn { justify-content: center; }
+    .steps { grid-template-columns: 1fr; }
+    .stack-row { flex-direction: column; gap: 2px; }
+    .stack-row-v { text-align: left; }
+    .stack-row-k { width: auto; }
+    .term-body { font-size: 12px; padding: 16px 14px 18px; }
+    .nav-cta .status-pill { display: none; }
+  }
+
+  /* reveal */
+  @keyframes reveal {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .reveal { animation: reveal 0.8s cubic-bezier(0.2, 0.7, 0.3, 1) both; }
+  .reveal[data-d="1"] { animation-delay: 0.08s; }
+  .reveal[data-d="2"] { animation-delay: 0.16s; }
+  .reveal[data-d="3"] { animation-delay: 0.24s; }
+  .reveal[data-d="4"] { animation-delay: 0.32s; }
+</style>
+</head>
+
+<body>
+
+<!-- ═════════ NAV ═════════ -->
+<nav class="nav">
+  <div class="wrap nav-inner">
+    <a href="#" class="brand">
+      <span class="brand-mark">D</span>
+      <span class="brand-name">devcat<span class="mute">.ai</span></span>
+    </a>
+    <div class="nav-links">
+      <a href="#work">work</a>
+      <a href="#services">services</a>
+      <a href="#process">process</a>
+      <a href="#pricing">pricing</a>
+      <a href="#contact">contact</a>
+    </div>
+    <div class="nav-cta">
+      <span class="status-pill">
+        <span class="status-dot"></span>
+        available · Q2 / 26
+      </span>
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme" title="Toggle theme">
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="4"/>
+          <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>
+        </svg>
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+        </svg>
+      </button>
+      <a href="#contact" class="btn btn-primary btn-sm">
+        Hire
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+  </div>
+</nav>
+
+<!-- ═════════ HERO ═════════ -->
+<section class="hero">
+  <div class="wrap">
+
+    <div class="hero-meta reveal">
+      <span class="meta-tag accent">
+        <span class="status-dot" style="width:6px;height:6px"></span>
+        Accepting new projects
+      </span>
+      <span class="meta-tag">Dhaka, BD · UTC+6</span>
+      <span class="meta-tag">React · Node · AI</span>
+    </div>
+
+    <h1 class="reveal" data-d="1">
+      Independent dev.<br>
+      Ships <span class="accent">MVPs, prototypes</span><br>
+      &amp; AI systems.
+    </h1>
+
+    <p class="hero-lede reveal" data-d="2">
+      One developer. Fixed scope, fixed price. I build AI-powered mobile apps, investor-ready prototypes, and complete system architectures for early-stage founders — in days, not months.
+    </p>
+
+    <div class="hero-actions reveal" data-d="3">
+      <a href="#work" class="btn btn-primary">
+        View work
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+      </a>
+      <a href="#pricing" class="btn btn-ghost">See pricing</a>
+    </div>
+
+    <!-- Terminal card -->
+    <div class="terminal reveal" data-d="4">
+      <div class="term-head">
+        <div class="term-dots"><span></span><span></span><span></span></div>
+        <span>~ / devcat-ai / about.sh</span>
+      </div>
+      <div class="term-body">
+        <div class="term-line">
+          <span class="term-prompt">$</span>
+          <span class="term-cmd">cat what-i-build.txt</span>
+        </div>
+        <div class="term-out">
+          → <span class="k">ai_mobile_apps</span>       <span class="s">"react-native + openai + node"</span>
+        </div>
+        <div class="term-out">
+          → <span class="k">investor_prototypes</span>   <span class="s">"interactive, pixel-perfect, 3-7 days"</span>
+        </div>
+        <div class="term-out">
+          → <span class="k">system_architecture</span>   <span class="s">"db + api + prompts + scale plan"</span>
+        </div>
+        <div class="term-out">
+          → <span class="k">trading_interfaces</span>    <span class="s">"real-time, data-dense, dark-mode"</span>
+        </div>
+        <br>
+        <div class="term-line">
+          <span class="term-prompt">$</span>
+          <span class="term-cmd">status --verbose</span>
+        </div>
+        <div class="term-out">
+          available = <span class="k">true</span>
+        </div>
+        <div class="term-out">
+          turnaround = <span class="n">3</span>..<span class="n">14</span> days
+        </div>
+        <div class="term-out">
+          projects_shipped = <span class="n">24</span>+
+        </div>
+        <div class="term-line">
+          <span class="term-prompt">$</span>
+          <span class="term-cursor"></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Stat bar -->
+    <div class="stat-bar reveal" data-d="4">
+      <div class="stat">
+        <div class="stat-n"><span class="accent">24</span>+</div>
+        <div class="stat-l">projects.shipped()</div>
+      </div>
+      <div class="stat">
+        <div class="stat-n">3 – 14</div>
+        <div class="stat-l">days_turnaround</div>
+      </div>
+      <div class="stat">
+        <div class="stat-n"><span class="accent">100</span>%</div>
+        <div class="stat-l">fixed_scope_pricing</div>
+      </div>
+      <div class="stat">
+        <div class="stat-n">∞</div>
+        <div class="stat-l">revisions_included</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═════════ SERVICES ═════════ -->
+<section id="services">
+  <div class="wrap">
+    <div class="sec-eyebrow"><span class="num">01</span><span>what_i_build</span></div>
+    <h2 class="sec-head">Focused craft. <span class="mute">No bloat.</span></h2>
+    <p class="sec-intro">
+      Most clients are non-technical founders who need something real, fast — to show investors, validate with users, or win a pitch. Here's what I ship best.
+    </p>
+
+    <div class="services">
+      <div class="service">
+        <div class="service-tag"><span class="hash">#</span> ai_mobile</div>
+        <h3>AI Mobile Apps</h3>
+        <p>React Native apps with GPT-4, Whisper, and custom prompt systems. Full stack — auth, backend, payments, deployment.</p>
+        <div class="service-stack">
+          <span class="stack-chip">React Native</span>
+          <span class="stack-chip">OpenAI</span>
+          <span class="stack-chip">Node.js</span>
+          <span class="stack-chip">MongoDB</span>
+        </div>
+      </div>
+
+      <div class="service">
+        <div class="service-tag"><span class="hash">#</span> prototypes</div>
+        <h3>Interactive Prototypes</h3>
+        <p>Clickable, animated mockups that look identical to the real app. Perfect for pitch decks, investor meetings, and user testing.</p>
+        <div class="service-stack">
+          <span class="stack-chip">HTML/CSS</span>
+          <span class="stack-chip">React</span>
+          <span class="stack-chip">Framer Motion</span>
+        </div>
+      </div>
+
+      <div class="service">
+        <div class="service-tag"><span class="hash">#</span> architecture</div>
+        <h3>System Architecture</h3>
+        <p>Complete technical blueprints — DB schemas, API routes, prompt engineering, scalability plans. Investor-grade docs devs can build from.</p>
+        <div class="service-stack">
+          <span class="stack-chip">Schema</span>
+          <span class="stack-chip">REST / WS</span>
+          <span class="stack-chip">LLM Prompts</span>
+        </div>
+      </div>
+
+      <div class="service">
+        <div class="service-tag"><span class="hash">#</span> fintech</div>
+        <h3>Trading &amp; Finance UIs</h3>
+        <p>Signal dashboards, pattern detection, credit-based systems. Data-dense, real-time, built for users who live in charts.</p>
+        <div class="service-stack">
+          <span class="stack-chip">WebSocket</span>
+          <span class="stack-chip">Charts</span>
+          <span class="stack-chip">Stripe</span>
+        </div>
+      </div>
+
+      <div class="service">
+        <div class="service-tag"><span class="hash">#</span> erp</div>
+        <h3>ERP &amp; Shop Apps</h3>
+        <p>Lightweight ERP for small businesses — inventory, orders, staff, POS. Offline-first for emerging markets. Scales when you grow.</p>
+        <div class="service-stack">
+          <span class="stack-chip">Offline-first</span>
+          <span class="stack-chip">Mobile</span>
+          <span class="stack-chip">POS</span>
+        </div>
+      </div>
+
+      <div class="service">
+        <div class="service-tag"><span class="hash">#</span> landing</div>
+        <h3>Landing &amp; Pitch Pages</h3>
+        <p>One-page sites that convert — for product launches, MVP pre-orders, or seed-round pages. SEO-ready, fast, designed to stand out.</p>
+        <div class="service-stack">
+          <span class="stack-chip">HTML/CSS</span>
+          <span class="stack-chip">SEO</span>
+          <span class="stack-chip">Analytics</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═════════ WORK ═════════ -->
+<section id="work">
+  <div class="wrap">
+    <div class="sec-eyebrow"><span class="num">02</span><span>selected_work</span></div>
+
+    <div class="work-intro">
+      <h2 class="sec-head">Real projects. <span class="accent">Real code.</span><br>Not templates.</h2>
+      <p>Every piece below is a working prototype or system I've built end-to-end. Click any card to open its live demo — these aren't static mockups, they're functional builds you can interact with.</p>
+    </div>
+
+    <div class="filters">
+      <button class="filt-btn on" data-f="all">all</button>
+      <button class="filt-btn" data-f="ai">ai / learning</button>
+      <button class="filt-btn" data-f="trading">trading</button>
+      <button class="filt-btn" data-f="erp">business / erp</button>
+      <button class="filt-btn" data-f="docs">architecture</button>
+    </div>
+
+    <div class="work-grid" id="work-grid"></div>
+  </div>
+</section>
+
+<!-- ═════════ PROCESS ═════════ -->
+<section id="process" style="border-top: 1px solid var(--border);">
+  <div class="wrap">
+    <div class="sec-eyebrow"><span class="num">03</span><span>process</span></div>
+    <h2 class="sec-head">Four steps. <span class="mute">No surprises.</span></h2>
+    <p class="sec-intro">
+      Every project follows the same rhythm. You always know what's happening, when delivery lands, and what it costs — upfront.
+    </p>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-header">
+          <span class="step-n"><span class="accent">01</span> / 04</span>
+          <span class="step-t">day 0 · free</span>
+        </div>
+        <h4>Brief</h4>
+        <p>You describe what you're building. I ask hard questions. We agree on exact scope before any money moves.</p>
+      </div>
+      <div class="step">
+        <div class="step-header">
+          <span class="step-n"><span class="accent">02</span> / 04</span>
+          <span class="step-t">day 1 – 10</span>
+        </div>
+        <h4>Build</h4>
+        <p>I work in focused blocks. Daily progress updates. You see builds in-progress. No agency ghosting.</p>
+      </div>
+      <div class="step">
+        <div class="step-header">
+          <span class="step-n"><span class="accent">03</span> / 04</span>
+          <span class="step-t">day 10 – 14</span>
+        </div>
+        <h4>Refine</h4>
+        <p>Unlimited revisions until you're genuinely happy. Pixel polish is part of the package, not extra.</p>
+      </div>
+      <div class="step">
+        <div class="step-header">
+          <span class="step-n"><span class="accent">04</span> / 04</span>
+          <span class="step-t">day 14+</span>
+        </div>
+        <h4>Ship</h4>
+        <p>Final files, live deployment, source code, written handover. 7 days of post-ship bug support.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═════════ PRICING ═════════ -->
+<section id="pricing" style="border-top: 1px solid var(--border);">
+  <div class="wrap">
+    <div class="sec-eyebrow"><span class="num">04</span><span>packages</span></div>
+    <h2 class="sec-head">Fixed scope. <span class="accent">Fixed price.</span><br>Shipped on time.</h2>
+    <p class="sec-intro">
+      Pick the tier that fits your stage. Every package includes unlimited revisions, source code ownership, and post-ship support.
+    </p>
+
+    <div class="pricing">
+
+      <div class="plan">
+        <div class="plan-label">// starter</div>
+        <h4>Prototype</h4>
+        <p class="plan-desc">A single polished screen or interactive mockup — ideal for pitch decks.</p>
+        <div class="plan-price">
+          <span class="cur">$</span>
+          <span class="n">250</span>
+          <span class="per">/ project</span>
+        </div>
+        <div class="plan-ship">→ ships in 3 – 5 days</div>
+        <ul class="plan-feats">
+          <li class="plan-feat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>One interactive mobile or web mockup</li>
+          <li class="plan-feat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Pixel-perfect design + animations</li>
+          <li class="plan-feat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Live hosted URL for sharing</li>
+          <li class="plan-feat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Figma or HTML/CSS deliverable</li>
+          <li class="plan-feat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Unlimited revisions</li>
+          <li class="plan-feat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Source files included</li>
+        </ul>
+        <a href="#contact" class="plan-btn">
+          Start project
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+
+      <div class="plan featured">
+        <div class="plan-badge">MOST POPULAR</div>
+        <div class="plan-label">// standard</div>
+        <h4>Full MVP</h4>
+        <p class="plan-desc">Clickable multi-screen app prototype — investor-ready, user-testable.</p>
+        <div class="plan-price">
+          <span class="cur">$</span>
+          <span class="n">650</span>
+          <span class="per">/ project</span>
+        </div>
+        <div class="plan-ship">→ ships in 7 – 10 days</div>
+        <ul class="plan-feats">
+          <li class="plan-feat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Up to 6 fully designed screens</li>
+          <li class="plan-feat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Full navigation &amp; state management</li>
+          <li class="plan-feat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>AI / LLM integration (OpenAI, Claude)</li>
+          <li class="plan-feat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Backend mock or simple API</li>
+          <li class="plan-feat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Auth, payments, persistence</li>
+          <li class="plan-feat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Deployed &amp; hosted live</li>
+          <li class="plan-feat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>14 days post-ship support</li>
+        </ul>
+        <a href="#contact" class="plan-btn">
+          Start project
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+
+      <div class="plan">
+        <div class="plan-label">// premium</div>
+        <h4>System Build</h4>
+        <p class="plan-desc">Architecture doc + production build. For serious founders ready to ship.</p>
+        <div class="plan-price">
+          <span class="cur">$</span>
+          <span class="n">1,500</span>
+          <span class="per">+ / project</span>
+        </div>
+        <div class="plan-ship">→ ships in 2 – 3 weeks</div>
+        <ul class="plan-feats">
+          <li class="plan-feat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Full system architecture doc</li>
+          <li class="plan-feat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Database schema &amp; API design</li>
+          <li class="plan-feat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Prompt engineering system (AI apps)</li>
+          <li class="plan-feat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Scalability roadmap &amp; cost plan</li>
+          <li class="plan-feat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Production-ready mobile or web app</li>
+          <li class="plan-feat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Deployment (Railway / Render / AWS)</li>
+          <li class="plan-feat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>30 days post-ship support</li>
+        </ul>
+        <a href="#contact" class="plan-btn">
+          Start project
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <p class="pricing-foot">
+      // need something outside these tiers? <a href="#contact">tell me about your project →</a>
+    </p>
+  </div>
+</section>
+
+<!-- ═════════ ABOUT ═════════ -->
+<section id="about" style="border-top: 1px solid var(--border);">
+  <div class="wrap">
+    <div class="sec-eyebrow"><span class="num">05</span><span>about</span></div>
+    <h2 class="sec-head">One dev. <span class="accent">Full stack.</span></h2>
+
+    <div class="about">
+      <div class="about-text">
+        <p>
+          I'm an independent full-stack developer based in <strong>Dhaka</strong>, working with founders worldwide. My focus is narrow: <strong>AI-powered mobile apps</strong>, <strong>investor-ready prototypes</strong>, and <strong>complete system architectures</strong> for startups at the earliest, riskiest stage.
+        </p>
+        <p>
+          Most founders don't need a five-person agency. They need one developer who ships, communicates clearly, and treats the project like their own. No account manager, no endless calls — just working code and visible progress.
+        </p>
+        <p>
+          Every project ends the same way: on time, within budget, with a result that actually runs.
+        </p>
+      </div>
+
+      <div class="stack-panel">
+        <div class="stack-panel-title">
+          <span><span class="k">const</span> stack = {</span>
+          <span>// 2026</span>
+        </div>
+        <div class="stack-row"><span class="stack-row-k">frontend:</span><span class="stack-row-v">React, Next, React Native</span></div>
+        <div class="stack-row"><span class="stack-row-k">backend:</span><span class="stack-row-v">Node.js, Express, Hono</span></div>
+        <div class="stack-row"><span class="stack-row-k">databases:</span><span class="stack-row-v">MongoDB, Postgres, Redis</span></div>
+        <div class="stack-row"><span class="stack-row-k">ai:</span><span class="stack-row-v">OpenAI, Claude, Whisper</span></div>
+        <div class="stack-row"><span class="stack-row-k">infra:</span><span class="stack-row-v">Vercel, Railway, Render, AWS</span></div>
+        <div class="stack-row"><span class="stack-row-k">payments:</span><span class="stack-row-v">Stripe, SSLCommerz, bKash</span></div>
+        <div class="stack-row"><span class="stack-row-k">design:</span><span class="stack-row-v">Figma, design systems</span></div>
+        <div class="stack-panel-title" style="padding-bottom:0; margin-bottom:0; margin-top:14px; border-bottom:none; padding-top:14px; border-top:1px solid var(--border);">
+          <span>};</span>
+          <span></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═════════ CTA ═════════ -->
+<section id="contact" class="cta">
+  <div class="wrap">
+    <div class="sec-eyebrow"><span class="num">06</span><span>start_project</span></div>
+    <h2>Have something to <span class="accent">build?</span></h2>
+    <p class="cta-lede">
+      Send a message on any channel. I usually reply within a few hours. Describe what you're building — even a rough idea works. I'll tell you honestly whether I'm the right fit.
+    </p>
+
+    <div class="channels">
+
+      <a class="channel" href="https://wa.me/{YOUR_WHATSAPP_NUMBER}" target="_blank" rel="noopener">
+        <div class="channel-head">
+          <div class="ch-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+          </div>
+          <div class="ch-name">WhatsApp</div>
+          <span class="ch-tag">fastest</span>
+        </div>
+        <div class="ch-desc">Direct chat. Usually reply within an hour during Dhaka hours.</div>
+        <div class="ch-link">
+          start_chat()
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H8M17 7V16"/></svg>
+        </div>
+      </a>
+
+      <a class="channel" href="mailto:{YOUR_EMAIL}">
+        <div class="channel-head">
+          <div class="ch-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          </div>
+          <div class="ch-name">Email</div>
+          <span class="ch-tag">detailed</span>
+        </div>
+        <div class="ch-desc">Best for attachments, long briefs, or formal communication.</div>
+        <div class="ch-link">
+          send_email()
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H8M17 7V16"/></svg>
+        </div>
+      </a>
+
+      <a class="channel" href="{YOUR_FIVERR_URL}" target="_blank" rel="noopener">
+        <div class="channel-head">
+          <div class="ch-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="10"/><path d="M9 9h6v9H9zM9 6h.01"/></svg>
+          </div>
+          <div class="ch-name">Fiverr</div>
+          <span class="ch-tag">escrow</span>
+        </div>
+        <div class="ch-desc">Book fixed-scope gigs directly. Milestones, escrow, verified reviews.</div>
+        <div class="ch-link">
+          view_profile()
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H8M17 7V16"/></svg>
+        </div>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═════════ FOOTER ═════════ -->
+<footer>
+  <div class="wrap foot">
+    <div class="foot-left">
+      <span>© 2026 DevCat.AI</span>
+      <span>Dhaka · BD</span>
+      <span>v1.0.0</span>
+    </div>
+    <div class="foot-left">
+      <a href="#work">work</a>
+      <a href="#services">services</a>
+      <a href="#pricing">pricing</a>
+      <a href="#contact">contact</a>
+    </div>
+  </div>
+</footer>
+
+<!-- ═════════ PROJECT DATA + RENDER ═════════ -->
+<script>
+/* ─────────────────────────────────────────
+   ADD / EDIT PROJECTS HERE
+   
+   Copy any block below to add a new one.
+   Replace {LIVE_DEMO_URL_X} with your deployed URL.
+   ───────────────────────────────────────── */
+
+const PROJECTS = [
+  {
+    id: "ai-english-coach",
+    title: "AI English Life Coach",
+    visualName: "AI English\nLife Coach",
+    category: "docs",
+    catLabel: "// flagship · architecture · ai",
+    description: "Complete technical blueprint for a GPT-4o-powered English learning app targeting Bangladeshi professionals. DB schemas, API layer, prompt engineering system, monetization plan, and 4-phase scalability roadmap.",
+    stack: "react-native · node · openai · mongo",
+    demoUrl: "{LIVE_DEMO_URL_1}",
+    size: "feature",
+    gradient: "linear-gradient(135deg, #1a0533 0%, #5b21b6 45%, #c026d3 100%)"
+  },
+  {
+    id: "ielts-coach",
+    title: "IELTS Coach — AI Band Trainer",
+    visualName: "IELTS · AI",
+    category: "ai",
+    catLabel: "// mobile · ai learning",
+    description: "Mobile dashboard with animated progress rings, band score tracker, and skill-specific practice modules. For candidates who want targeted feedback.",
+    stack: "html · css · svg animation",
+    demoUrl: "{LIVE_DEMO_URL_2}",
+    size: "half",
+    gradient: "linear-gradient(135deg, #0a0a1e 0%, #4c1d95 50%, #06b6d4 100%)"
+  },
+  {
+    id: "trade-edge",
+    title: "TradeEdge — Signal Platform",
+    visualName: "TradeEdge",
+    category: "trading",
+    catLabel: "// mobile · fintech",
+    description: "Credit-based signal subscription app. Live trades, pip-chart performance history, refund-on-loss transaction logic. Three full screens, mobile-first.",
+    stack: "html · css · real-time ui",
+    demoUrl: "{LIVE_DEMO_URL_3}",
+    size: "half",
+    gradient: "linear-gradient(135deg, #020617 0%, #0f766e 60%, #00E5BE 100%)"
+  },
+  {
+    id: "eduspark",
+    title: "EduSpark — AI Tutor",
+    visualName: "EduSpark",
+    category: "ai",
+    catLabel: "// edtech · gamified",
+    description: "XP, streaks, leaderboards, live exams, prize system. Built for retention.",
+    stack: "mobile · ai",
+    demoUrl: "{LIVE_DEMO_URL_4}",
+    size: "third",
+    gradient: "linear-gradient(135deg, #040611 0%, #7C3AED 60%, #22D3EE 100%)"
+  },
+  {
+    id: "shop-erp",
+    title: "ShopERP — FB Store",
+    visualName: "ShopERP",
+    category: "erp",
+    catLabel: "// smb · erp",
+    description: "Offline-first order and inventory manager for Facebook-based retailers.",
+    stack: "mobile · erp",
+    demoUrl: "{LIVE_DEMO_URL_5}",
+    size: "third",
+    gradient: "linear-gradient(135deg, #070c17 0%, #1e40af 50%, #3b82f6 100%)"
+  },
+  {
+    id: "vendo",
+    title: "Vendo — Shop Manager",
+    visualName: "Vendo",
+    category: "erp",
+    catLabel: "// smb · retail",
+    description: "Premium dashboard for offline retailers. Staff, orders, stock.",
+    stack: "mobile · pos",
+    demoUrl: "{LIVE_DEMO_URL_6}",
+    size: "third",
+    gradient: "linear-gradient(135deg, #1a130b 0%, #92400e 50%, #f59e0b 100%)"
+  }
+
+  // ── Template for adding more projects ──
+  // ,{
+  //   id: "slug",
+  //   title: "Project Title",
+  //   visualName: "Short Name",
+  //   category: "ai",               // ai | trading | erp | docs
+  //   catLabel: "// category · type",
+  //   description: "Short description, 1-2 sentences.",
+  //   stack: "stack · items · here",
+  //   demoUrl: "https://your-demo.com",
+  //   size: "half",                 // feature | half | third
+  //   gradient: "linear-gradient(135deg, #hex1, #hex2)"
+  // }
+];
+
+const grid = document.getElementById("work-grid");
+
+function renderProjects(filter = "all") {
+  const list = filter === "all"
+    ? PROJECTS
+    : PROJECTS.filter(p => p.category === filter);
+
+  grid.innerHTML = list.map(p => {
+    const sizeClass = p.size === "feature" ? "feature" : p.size === "third" ? "third" : "";
+    const safeName = p.visualName.replace(/\n/g, "<br>");
+    return `
+      <article class="work-card ${sizeClass}" data-cat="${p.category}">
+        <a href="${p.demoUrl}" target="_blank" rel="noopener" class="work-visual" style="background: ${p.gradient};">
+          <div class="work-visual-content">
+            <div class="work-visual-name">${safeName}</div>
+            <span class="work-visual-cta">
+              live demo
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H8M17 7V16"/></svg>
+            </span>
+          </div>
+        </a>
+        <div class="work-body">
+          <div class="work-cat">${p.catLabel}</div>
+          <h3 class="work-title">${p.title}</h3>
+          <p class="work-desc">${p.description}</p>
+          <div class="work-foot">
+            <span class="stack">${p.stack}</span>
+            <a class="demo" href="${p.demoUrl}" target="_blank" rel="noopener">
+              open →
+            </a>
+          </div>
+        </div>
+      </article>
+    `;
+  }).join("");
+}
+
+document.querySelectorAll(".filt-btn").forEach(btn => {
+  btn.addEventListener("click", () => {
+    document.querySelectorAll(".filt-btn").forEach(b => b.classList.remove("on"));
+    btn.classList.add("on");
+    renderProjects(btn.dataset.f);
+  });
+});
+
+renderProjects();
+
+/* ─────────── THEME TOGGLE ─────────── */
+(function() {
+  const btn = document.getElementById("themeToggle");
+  const meta = document.querySelector('meta[name="theme-color"]');
+  const html = document.documentElement;
+
+  function syncMeta() {
+    if (!meta) return;
+    meta.setAttribute("content", html.getAttribute("data-theme") === "light" ? "#fafaf9" : "#0a0a0a");
+  }
+  syncMeta();
+
+  if (!btn) return;
+  btn.addEventListener("click", () => {
+    const next = html.getAttribute("data-theme") === "light" ? "dark" : "light";
+    html.setAttribute("data-theme", next);
+    try { localStorage.setItem("devcat-theme", next); } catch (e) {}
+    syncMeta();
+  });
+})();
+</script>
+
+</body>
+</html>
