@@ -5,16 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#0a0a0a" />
 
-    <title>DevCat Pro — Independent developer · MVPs, prototypes, Pro systems</title>
-    <meta name="description" content="Independent full-stack developer. Ships Pro mobile apps, investor-ready prototypes, and system architecture docs for early-stage founders. Fixed scope. Fixed price. 3–14 days." />
+    <title>Devcat Pro — Independent developer · MVPs, prototypes, AI systems</title>
+    <meta name="description" content="Independent full-stack developer. Ships AI mobile apps, investor-ready prototypes, and system architecture docs for early-stage founders. Fixed scope. Fixed price. 3–14 days." />
 
-    <link rel="canonical" href="https://devcatPro.netlify.app/" />
+    <link rel="canonical" href="https://devcatai.netlify.app/" />
     <meta name="google-site-verification" content="zf44eW1bMxqi8zSOMnYeW4vOYS-B0rxomWLqqm59MHo" />
 
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="DevCat Pro — Independent developer · MVPs & prototypes" />
-    <meta property="og:description" content="Ships Pro mobile apps and investor-ready prototypes for founders. Fixed scope. 3–14 days." />
-    <meta property="og:url" content="https://devcatPro.netlify.app/" />
+    <meta property="og:title" content="Devcat Pro — Independent developer · MVPs & prototypes" />
+    <meta property="og:description" content="Ships AI mobile apps and investor-ready prototypes for founders. Fixed scope. 3–14 days." />
+    <meta property="og:url" content="https://devcatai.netlify.app/" />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -24,11 +24,11 @@
       {
         "@context": "https://schema.org",
         "@type": "ProfessionalService",
-        "name": "DevCat Pro",
-        "description": "Independent developer building MVPs, prototypes, and Pro systems for early-stage founders.",
-        "url": "https://devcatPro.netlify.app/",
+        "name": "Devcat Pro",
+        "description": "Independent developer building MVPs, prototypes, and AI systems for early-stage founders.",
+        "url": "https://devcatai.netlify.app/",
         "priceRange": "$250-$1500",
-        "serviceType": ["MVP Development", "Pro Integration", "Mobile App Development"]
+        "serviceType": ["MVP Development", "AI Integration", "Mobile App Development"]
       }
     </script>
 
@@ -717,7 +717,6 @@
         background: var(--fg);
         color: var(--bg);
       }
-
       .work-grid {
         display: grid;
         grid-template-columns: repeat(12, 1fr);
@@ -747,6 +746,14 @@
         opacity: 0.5;
       }
 
+      /* FIX 1 — hide overlay and name for real image cards */
+      .work-card.has-image .work-visual::before {
+        display: none;
+      }
+      .work-card.has-image .work-visual-name {
+        display: none;
+      }
+
       /* gradient visual */
       .work-visual {
         position: relative;
@@ -756,12 +763,17 @@
         padding: 26px 26px 22px;
         overflow: hidden;
         border-bottom: 1px solid var(--border);
+
+        /* FIX 2 — cover + center top so screenshots don't crop badly */
+        background-size: cover;
+        background-position: center top;
+        background-repeat: no-repeat;
       }
       .work-card.feature .work-visual {
         aspect-ratio: 21 / 9;
       }
       .work-card.third .work-visual {
-        aspect-ratio: 4 / 5;
+        aspect-ratio: 4 / 2;
         padding: 20px;
       }
 
@@ -770,7 +782,6 @@
         position: absolute;
         inset: 0;
         opacity: 0.35;
-        background-image: radial-gradient(circle at 85% 15%, rgba(255, 255, 255, 0.18), transparent 45%), url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence baseFrequency='0.65' numOctaves='3'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.09 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
         mix-blend-mode: overlay;
         transition: opacity 0.3s;
         pointer-events: none;
@@ -899,6 +910,54 @@
       .work-foot .demo svg {
         width: 10px;
         height: 10px;
+      }
+
+      /* ═════════ LIVE PREVIEW IFRAME ═════════ */
+      .work-card.has-live .work-visual {
+        padding: 0;
+        overflow: hidden;
+        cursor: pointer;
+      }
+      .live-frame-wrap {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        pointer-events: none;
+      }
+      .live-frame-wrap iframe {
+        width: 200%;
+        height: 200%;
+        transform: scale(0.5);
+        transform-origin: top left;
+        border: none;
+        animation: liveScroll 18s linear infinite;
+      }
+      .work-card.has-live:hover .live-frame-wrap iframe {
+        animation-play-state: paused;
+      }
+      @keyframes liveScroll {
+        0% {
+          transform: scale(0.5) translateY(0);
+        }
+        90% {
+          transform: scale(0.5) translateY(-50%);
+        }
+        100% {
+          transform: scale(0.5) translateY(0);
+        }
+      }
+      /* keep the CTA button visible on top */
+      .work-card.has-live .work-visual-content {
+        position: absolute;
+        bottom: 22px;
+        left: 26px;
+        right: 26px;
+        z-index: 3;
+      }
+      .work-card.has-live .work-visual-name {
+        display: none;
       }
 
       /* ═════════ PROCESS ═════════ */
@@ -1495,7 +1554,7 @@
           <span class="brand-mark">D</span>
           <span class="brand-name">
             devcat
-            <span class="mute">.Pro</span>
+            <span class="mute">Pro</span>
           </span>
         </a>
         <div class="nav-links">
@@ -1508,7 +1567,7 @@
         <div class="nav-cta">
           <span class="status-pill">
             <span class="status-dot"></span>
-            avProlable · Q2 / 26
+            available · Q2 / 26
           </span>
           <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme" title="Toggle theme">
             <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -1536,7 +1595,7 @@
             Accepting new projects
           </span>
           <span class="meta-tag">Dhaka, BD · UTC+6</span>
-          <span class="meta-tag">React · Node · Pro</span>
+          <span class="meta-tag">React · Node · AI</span>
         </div>
 
         <h1 class="reveal" data-d="1">
@@ -1545,10 +1604,10 @@
           Ships
           <span class="accent">MVPs, prototypes</span>
           <br />
-          &amp; Pro systems.
+          &amp; AI systems.
         </h1>
 
-        <p class="hero-lede reveal" data-d="2">One developer. Fixed scope, fixed price. I build Pro-powered mobile apps, investor-ready prototypes, and complete system architectures for early-stage founders — in days, not months.</p>
+        <p class="hero-lede reveal" data-d="2">One developer. Fixed scope, fixed price. I build AI-powered mobile apps, investor-ready prototypes, and complete system architectures for early-stage founders — in days, not months.</p>
 
         <div class="hero-actions reveal" data-d="3">
           <a href="#work" class="btn btn-primary">
@@ -1566,7 +1625,7 @@
               <span></span>
               <span></span>
             </div>
-            <span>~ / devcat-Pro / about.sh</span>
+            <span>~ / devcat-ai / about.sh</span>
           </div>
           <div class="term-body">
             <div class="term-line">
@@ -1575,8 +1634,8 @@
             </div>
             <div class="term-out">
               →
-              <span class="k">Pro_mobile_apps</span>
-              <span class="s">"react-native + openPro + node"</span>
+              <span class="k">ai_mobile_apps</span>
+              <span class="s">"react-native + openai + node"</span>
             </div>
             <div class="term-out">
               →
@@ -1599,7 +1658,7 @@
               <span class="term-cmd">status --verbose</span>
             </div>
             <div class="term-out">
-              avProlable =
+              available =
               <span class="k">true</span>
             </div>
             <div class="term-out">
@@ -1666,13 +1725,13 @@
           <div class="service">
             <div class="service-tag">
               <span class="hash">#</span>
-              Pro_mobile
+              ai_mobile
             </div>
-            <h3>Pro Mobile Apps</h3>
+            <h3>AI Mobile Apps</h3>
             <p>React Native apps with GPT-4, Whisper, and custom prompt systems. Full stack — auth, backend, payments, deployment.</p>
             <div class="service-stack">
               <span class="stack-chip">React Native</span>
-              <span class="stack-chip">OpenPro</span>
+              <span class="stack-chip">OpenAI</span>
               <span class="stack-chip">Node.js</span>
               <span class="stack-chip">MongoDB</span>
             </div>
@@ -1771,7 +1830,7 @@
 
         <div class="filters">
           <button class="filt-btn on" data-f="all">all</button>
-          <button class="filt-btn" data-f="Pro">Pro / learning</button>
+          <button class="filt-btn" data-f="ai">ai / learning</button>
           <button class="filt-btn" data-f="trading">trading</button>
           <button class="filt-btn" data-f="erp">business / erp</button>
           <button class="filt-btn" data-f="docs">architecture</button>
@@ -1815,7 +1874,7 @@
               <span class="step-t">day 1 – 10</span>
             </div>
             <h4>Build</h4>
-            <p>I work in focused blocks. DProly progress updates. You see builds in-progress. No agency ghosting.</p>
+            <p>I work in focused blocks. Daily progress updates. You see builds in-progress. No agency ghosting.</p>
           </div>
           <div class="step">
             <div class="step-header">
@@ -1923,7 +1982,7 @@
               </li>
               <li class="plan-feat">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12" /></svg>
-                Pro / LLM integration (OpenPro, Claude)
+                AI / LLM integration (OpenAI, Claude)
               </li>
               <li class="plan-feat">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12" /></svg>
@@ -1969,7 +2028,7 @@
               </li>
               <li class="plan-feat">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12" /></svg>
-                Prompt engineering system (Pro apps)
+                Prompt engineering system (AI apps)
               </li>
               <li class="plan-feat">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12" /></svg>
@@ -1981,7 +2040,7 @@
               </li>
               <li class="plan-feat">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12" /></svg>
-                Deployment (RProlway / Render / AWS)
+                Deployment (Railway / Render / AWS)
               </li>
               <li class="plan-feat">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12" /></svg>
@@ -2020,7 +2079,7 @@
               I'm an independent full-stack developer based in
               <strong>Dhaka</strong>
               , working with founders worldwide. My focus is narrow:
-              <strong>Pro-powered mobile apps</strong>
+              <strong>AI-powered mobile apps</strong>
               ,
               <strong>investor-ready prototypes</strong>
               , and
@@ -2052,12 +2111,12 @@
               <span class="stack-row-v">MongoDB, Postgres, Redis</span>
             </div>
             <div class="stack-row">
-              <span class="stack-row-k">Pro:</span>
-              <span class="stack-row-v">OpenPro, Claude, Whisper</span>
+              <span class="stack-row-k">ai:</span>
+              <span class="stack-row-v">OpenAI, Claude, Whisper</span>
             </div>
             <div class="stack-row">
               <span class="stack-row-k">infra:</span>
-              <span class="stack-row-v">Vercel, RProlway, Render, AWS</span>
+              <span class="stack-row-v">Vercel, Railway, Render, AWS</span>
             </div>
             <div class="stack-row">
               <span class="stack-row-k">payments:</span>
@@ -2090,7 +2149,7 @@
         <p class="cta-lede">Send a message on any channel. I usually reply within a few hours. Describe what you're building — even a rough idea works. I'll tell you honestly whether I'm the right fit.</p>
 
         <div class="channels">
-          <a class="channel" href="https://wa.me/{YOUR_WHATSAPP_NUMBER}" target="_blank" rel="noopener">
+          <a class="channel" href="https://wa.me/8801995014920" target="_blank" rel="noopener">
             <div class="channel-head">
               <div class="ch-icon">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" /></svg>
@@ -2105,7 +2164,7 @@
             </div>
           </a>
 
-          <a class="channel" href="mProlto:{YOUR_EMProL}">
+          <a class="channel" href="mailto:{YOUR_EMAIL}">
             <div class="channel-head">
               <div class="ch-icon">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
@@ -2113,12 +2172,12 @@
                   <polyline points="22,6 12,13 2,6" />
                 </svg>
               </div>
-              <div class="ch-name">EmProl</div>
-              <span class="ch-tag">detProled</span>
+              <div class="ch-name">Email</div>
+              <span class="ch-tag">detailed</span>
             </div>
             <div class="ch-desc">Best for attachments, long briefs, or formal communication.</div>
             <div class="ch-link">
-              send_emProl()
+              send_email()
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H8M17 7V16" /></svg>
             </div>
           </a>
@@ -2148,7 +2207,7 @@
     <footer>
       <div class="wrap foot">
         <div class="foot-left">
-          <span>© 2026 DevCat pro</span>
+          <span>© 2026 DevCat Pro</span>
           <span>Dhaka · BD</span>
           <span>v1.0.0</span>
         </div>
@@ -2172,23 +2231,23 @@
 
       const PROJECTS = [
         {
-          id: "Pro-english-coach",
-          title: "Pro English Life Coach",
-          visualName: "Pro English\nLife Coach",
+          id: "ai-english-coach",
+          title: "AI English Life Coach",
+          visualName: "AI English\nLife Coach",
           category: "docs",
-          catLabel: "// flagship · architecture · Pro",
+          catLabel: "// flagship · architecture · ai",
           description: "Complete technical blueprint for a GPT-4o-powered English learning app targeting Bangladeshi professionals. DB schemas, API layer, prompt engineering system, monetization plan, and 4-phase scalability roadmap.",
-          stack: "react-native · node · openPro · mongo",
+          stack: "react-native · node · openai · mongo",
           demoUrl: "{LIVE_DEMO_URL_1}",
           size: "feature",
           gradient: "linear-gradient(135deg, #1a0533 0%, #5b21b6 45%, #c026d3 100%)",
         },
         {
           id: "ielts-coach",
-          title: "IELTS Coach — Pro Band TrProner",
-          visualName: "IELTS · Pro",
-          category: "Pro",
-          catLabel: "// mobile · Pro learning",
+          title: "IELTS Coach — AI Band Trainer",
+          visualName: "IELTS · AI",
+          category: "ai",
+          catLabel: "// mobile · ai learning",
           description: "Mobile dashboard with animated progress rings, band score tracker, and skill-specific practice modules. For candidates who want targeted feedback.",
           stack: "html · css · svg animation",
           demoUrl: "{LIVE_DEMO_URL_2}",
@@ -2203,18 +2262,20 @@
           catLabel: "// mobile · fintech",
           description: "Credit-based signal subscription app. Live trades, pip-chart performance history, refund-on-loss transaction logic. Three full screens, mobile-first.",
           stack: "html · css · real-time ui",
-          demoUrl: "{LIVE_DEMO_URL_3}",
+          demoUrl: "https://catbex.github.io/devcat/forex-event-app.html",
+          live_preview_url: "https://catbex.github.io/devcat/forex-event-app-live-preview.html",
+          image: "https://catbex.github.io/devcat/forex-event-app-preview-image.png",
           size: "half",
           gradient: "linear-gradient(135deg, #020617 0%, #0f766e 60%, #00E5BE 100%)",
         },
         {
           id: "eduspark",
-          title: "EduSpark — Pro Tutor",
+          title: "EduSpark — AI Tutor",
           visualName: "EduSpark",
-          category: "Pro",
+          category: "ai",
           catLabel: "// edtech · gamified",
           description: "XP, streaks, leaderboards, live exams, prize system. Built for retention.",
-          stack: "mobile · Pro",
+          stack: "mobile · ai",
           demoUrl: "{LIVE_DEMO_URL_4}",
           size: "third",
           gradient: "linear-gradient(135deg, #040611 0%, #7C3AED 60%, #22D3EE 100%)",
@@ -2225,7 +2286,7 @@
           visualName: "ShopERP",
           category: "erp",
           catLabel: "// smb · erp",
-          description: "Offline-first order and inventory manager for Facebook-based retProlers.",
+          description: "Offline-first order and inventory manager for Facebook-based retailers.",
           stack: "mobile · erp",
           demoUrl: "{LIVE_DEMO_URL_5}",
           size: "third",
@@ -2236,8 +2297,8 @@
           title: "Vendo — Shop Manager",
           visualName: "Vendo",
           category: "erp",
-          catLabel: "// smb · retProl",
-          description: "Premium dashboard for offline retProlers. Staff, orders, stock.",
+          catLabel: "// smb · retail",
+          description: "Premium dashboard for offline retailers. Staff, orders, stock.",
           stack: "mobile · pos",
           demoUrl: "{LIVE_DEMO_URL_6}",
           size: "third",
@@ -2249,7 +2310,7 @@
         //   id: "slug",
         //   title: "Project Title",
         //   visualName: "Short Name",
-        //   category: "Pro",               // Pro | trading | erp | docs
+        //   category: "ai",               // ai | trading | erp | docs
         //   catLabel: "// category · type",
         //   description: "Short description, 1-2 sentences.",
         //   stack: "stack · items · here",
@@ -2267,35 +2328,59 @@
         grid.innerHTML = list
           .map((p) => {
             const sizeClass = p.size === "feature" ? "feature" : p.size === "third" ? "third" : "";
-            const safeName = p.visualName.replace(/\n/g, "<br>");
+            const safeName = p.visualName ? p.visualName.replace(/\n/g, "<br>") : p.title;
+
+            // Priority: live_preview_url → image → gradient
+            // Priority: live_preview_url → image → gradient
+            const visualStyle = p.live_preview_url ? `position: relative;` : p.image ? `background-image: url('${p.image}'); background-size: cover; background-position: center top; background-repeat: no-repeat;` : `background: ${p.gradient};`;
+
+            const hasImage = p.image ? "has-image" : "";
+            const hasLive = p.live_preview_url ? "has-live" : "";
+
             return `
-      <article class="work-card ${sizeClass}" data-cat="${p.category}">
-        <a href="${p.demoUrl}" target="_blank" rel="noopener" class="work-visual" style="background: ${p.gradient};">
-          <div class="work-visual-content">
-            <div class="work-visual-name">${safeName}</div>
-            <span class="work-visual-cta">
-              live demo
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H8M17 7V16"/></svg>
-            </span>
+        <article class="work-card ${sizeClass} ${hasImage} ${hasLive}" data-cat="${p.category}">
+          <a href="${p.demoUrl}" target="_blank" rel="noopener" class="work-visual" style="${visualStyle}">
+
+            ${
+              p.live_preview_url
+                ? `
+              <div class="live-frame-wrap">
+                <iframe
+                  src="${p.live_preview_url}"
+                  loading="lazy"
+                  scrolling="no"
+                  title="${p.title} live preview">
+                </iframe>
+              </div>
+            `
+                : ""
+            }
+
+            <div class="work-visual-content">
+              <div class="work-visual-name">${safeName}</div>
+              <span class="work-visual-cta">
+                live demo
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H8M17 7V16"/></svg>
+              </span>
+            </div>
+          </a>
+
+          <div class="work-body">
+            <div class="work-cat">${p.catLabel}</div>
+            <h3 class="work-title">${p.title}</h3>
+            <p class="work-desc">${p.description}</p>
+            <div class="work-foot">
+              <span class="stack">${p.stack}</span>
+              <a class="demo" href="${p.demoUrl}" target="_blank" rel="noopener">
+                open →
+              </a>
+            </div>
           </div>
-        </a>
-        <div class="work-body">
-          <div class="work-cat">${p.catLabel}</div>
-          <h3 class="work-title">${p.title}</h3>
-          <p class="work-desc">${p.description}</p>
-          <div class="work-foot">
-            <span class="stack">${p.stack}</span>
-            <a class="demo" href="${p.demoUrl}" target="_blank" rel="noopener">
-              open →
-            </a>
-          </div>
-        </div>
-      </article>
-    `;
+        </article>
+      `;
           })
           .join("");
       }
-
       document.querySelectorAll(".filt-btn").forEach((btn) => {
         btn.addEventListener("click", () => {
           document.querySelectorAll(".filt-btn").forEach((b) => b.classList.remove("on"));
